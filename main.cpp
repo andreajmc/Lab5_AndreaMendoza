@@ -14,18 +14,10 @@ using std::string;
 #include "Artist.h"
 #include "Song.h"
 
-void showRadio(vector<Radio*>);
-void showPlaylist(vector<Playlist*>);
-void showArtists(vector<Artist*>);
-void addSongToArtist(Artist, Song);
-void addSongtoRadio(Radio, Song);
-void createSong();
-void createArtist();
-void createRadio();
-void createPlaylist();
 
 int main() {
-    int resp = -1;
+    int respU = -1;
+    int resp;
     vector<Radio *> allRadios;
     vector<Song *> allSongs;
     vector<Artist *> allArtists;
@@ -33,13 +25,12 @@ int main() {
     Song *song;
     Artist *artist;
     bool playing = false;
-    while (resp != 0) {
+    while (respU == -1) {
 
         if (playing) {
             song->addRep();
             artist->addRep();
             cout << "[NOW PLAYING " << song->getName() << " ]" << endl;
-            resp = -1;
         }
         cout << endl << "MENÚ:" << endl << endl <<
              "[1] Seleccionar canción." << endl << endl <<
@@ -67,6 +58,7 @@ int main() {
                 song = allSongs.at(s - 1);
                 playing = true;
                 cout << "[NOW PLAYING " << song->getName() << " ]" << endl;
+                respU = -1;
             }
         } else if (resp == 2) {
             if (allArtists.size() <= 0) {
@@ -98,6 +90,7 @@ int main() {
                     }
                 }
                 cout << endl << "¡Canción creada exitósamente!";
+                delete temp;
             }
         } else if (resp == 3) {
             string name;
@@ -194,6 +187,28 @@ int main() {
             cout << endl;
             P->addSongs(S);
             cout << "¡Canción agregada exitósamente!" << endl;
+        } else if (resp == 0) {
+            respU = 0;
+            for (int i = 0; i < allSongs.size(); i++) {
+                delete allSongs[i];
+                allSongs[i] = NULL;
+            }
+            allSongs.clear();
+            for (int i = 0; i < allRadios.size(); i++) {
+                delete allSongs[i];
+                allRadios[i] = NULL;
+            }
+            allRadios.clear();
+            for (int i = 0; i < allPlaylist.size(); i++) {
+                delete allPlaylist[i];
+                allPlaylist[i] = NULL;
+            }
+            allPlaylist.clear();
+            for (int i = 0; i < allArtists.size(); i++) {
+                delete allArtists[i];
+                allArtists[i] = NULL;
+            }
+            allArtists.clear();
         }
     }
 }
